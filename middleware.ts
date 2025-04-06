@@ -1,30 +1,17 @@
 import { withAuth } from "next-auth/middleware";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export default withAuth(
-  // `withAuth` augments your `Request` with the user's token.
-  function middleware(req:any) {
-    if (
-      (req.nextUrl.pathname == "/" ||
-        req.nextUrl.pathname == "/contact" ||
-        req.nextUrl.pathname == "/features" ||
-        req.nextUrl.pathname == "/about") 
-    )
-      return NextResponse.rewrite(
-        new URL("/auth/login?message=You Are Not Authorized!", req.url)
-      );
+  function middleware(req) {
+    return NextResponse.next();
   },
   {
     callbacks: {
-      authorized: ({ token }:{token:any}) => !!token,
+      authorized: ({ token }) => !!token,
     },
   }
 );
+
 export const config = {
-  matcher: [
-    "/contact",
-    "/about",
-    "/features",
-    "/",
-  ],
+  matcher: ["/", "/contact", "/features", "/about"],
 };
