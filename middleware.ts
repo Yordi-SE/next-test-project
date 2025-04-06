@@ -8,8 +8,7 @@ export default withAuth(
       (req.nextUrl.pathname == "/" ||
         req.nextUrl.pathname == "/contact" ||
         req.nextUrl.pathname == "/features" ||
-        req.nextUrl.pathname == "/about") &&
-      req.nextauth.token?.userData?.user.is_supplier == false
+        req.nextUrl.pathname == "/about") 
     )
       return NextResponse.rewrite(
         new URL("/auth/login?message=You Are Not Authorized!", req.url)
